@@ -1,0 +1,13 @@
+<h2>Minhas Tarefas</h2>
+<p>Minhas tarefas</p>
+
+<% if @tasks.empty? %>
+  <p>Não há tarefas. Para cadastrar uma nova tarefa, clique no botão abaixo:</p>
+  <%= link_to 'Cadastrar', new_task_path, class: 'btn btn-primary' %>
+<% else %>
+  <% @tasks.each do |task| %>
+    <p><%= link_to task.title, task_path(task) %></p>
+  <% end %>
+<% end %>
+
+<%= link_to 'Cadastrar nova tarefa', new_task_path, class: 'btn btn-primary' %>
