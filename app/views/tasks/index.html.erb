@@ -7,6 +7,7 @@
 <% else %>
   <% @tasks.each do |task| %>
     <p><%= link_to task.title, task_path(task) %></p>
+    <%= button_to "Deletar", task, method: :delete, form: { data: { turbo_confirm: "Tem certeza?" } }, class: "btn btn-danger" %>
   <% end %>
 <% end %>
 
