@@ -25,9 +25,20 @@ class TasksController < ApplicationController
   end
 
   def update
+    if @task.update(task_params)
+      redirect_to tasks_path, notice: "Tarefa atualizada com sucesso"
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
 
+
   def destroy
+    if @task.destroy
+      redirect_to tasks_path, notice: "Tarefa excluida com sucesso"
+    else
+      render :show, status: :unprocessable_entity
+    end
   end
 
   private
