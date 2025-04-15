@@ -7,8 +7,57 @@
 <% else %>
   <% @tasks.each do |task| %>
     <p><%= link_to task.title, task_path(task) %></p>
-    <%= button_to "Deletar", task, method: :delete, form: { data: { turbo_confirm: "Tem certeza?" } }, class: "btn btn-danger" %>
+
+    <%= button_to "Deletar", task, method: :delete, class: "btn btn-danger", data: { bs_toggle: "modal", bs_target: "#confirmDeleteModal", task_url: task_path(task) } %>
+
   <% end %>
 <% end %>
 
 <%= link_to 'Cadastrar nova tarefa', new_task_path, class: 'btn btn-primary' %>
+
+
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmação</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
+      </div>
+      <div class="modal-body">
+        Tem certeza que deseja excluir esta tarefa?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <form id="deleteTaskForm" method="post">
+          <input type="hidden" name="_method" value="delete">
+          <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+          <button type="submit" class="btn btn-danger">Excluir</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+ <%# Tentei implementar fora da view, mas nao deu certo %>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const deleteButtons = document.querySelectorAll("form.button_to button[data-bs-toggle='modal']");
+    const deleteForm = document.getElementById("deleteTaskForm");
+
+    deleteButtons.forEach((btn) => {
+      btn.addEventListener("click", function (event) {
+        event.preventDefault();
+        const taskUrl = btn.dataset.taskUrl;
+        deleteForm.setAttribute("action", taskUrl);
+        const modal = new bootstrap.Modal(document.getElementById("confirmDeleteModal"));
+        modal.show();
+      });
+    });
+
+    // Ao fechar o modal, recarregar a página -- não estava funcionando
+    const modal = document.getElementById("confirmDeleteModal");
+    modal.addEventListener('hidden.bs.modal', function () {
+      window.location.reload();
+    });
+  });
+</script>
