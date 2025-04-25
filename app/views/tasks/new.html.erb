@@ -1,8 +1,18 @@
-<h1>Tasks#new</h1>
-<p>Find me in app/views/tasks/new.html.erb</p>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow rounded-4">
+        <div class="card-header bg-primary text-white">
+          <h4 class="mb-0">Nova Tarefa</h4>
+        </div>
+        <div class="card-body">
+          <%= render 'form' %>
+        </div>
+      </div>
 
-<h2>Nova Tarefa</h2>
-
-<%= render 'form' %>
-
-<%= link_to 'Voltar', tasks_path, class: 'btn btn-secondary mt-2' %>
+      <div class="mt-3 text-end">
+        <%= link_to 'Voltar para Minhas Tarefas', tasks_path, class: 'btn btn-outline-secondary' %>
+      </div>
+    </div>
+  </div>
+</div>
