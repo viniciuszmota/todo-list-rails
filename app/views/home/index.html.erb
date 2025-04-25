@@ -1,8 +1,9 @@
-<h1>Home#index</h1>
-<p>Find me in app/views/home/index.html.erb</p>
-<div class="container mt-5">
-  <h1 class="text-primary">To-Do List App com Bootstrap!</h1>
-</div>
+<main class="container d-flex flex-column justify-content-center align-items-center flex-grow-1 text-center" style="min-height: calc(100vh - 136px);">
+  <h1 class="mb-4 text-primary fw-bold">Bem-vindo à To-Do List App</h1>
+  <p class="lead mb-5">Organize suas tarefas com simplicidade e praticidade.</p>
 
-<div class=signin><%= link_to 'Log in', new_user_session_path, class: 'btn btn-primary' %></div>
-<div class=signup><%= link_to 'Cadastrar', new_user_registration_path, class: 'btn btn-primary' %></div>
+  <div class="d-flex gap-3">
+    <%= link_to 'Entrar', new_user_session_path, class: 'btn btn-primary btn-lg' %>
+    <%= link_to 'Cadastrar-se', new_user_registration_path, class: 'btn btn-outline-primary btn-lg' %>
+  </div>
+</main>
