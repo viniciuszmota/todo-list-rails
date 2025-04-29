@@ -1,8 +1,19 @@
-<h1>Tasks#edit</h1>
-<p>Find me in app/views/tasks/edit.html.erb</p>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+          <h5 class="mb-0">Editar Tarefa</h5>
+        </div>
 
-<h2>Editar Tarefa</h2>
+        <div class="card-body">
+          <%= render 'form' %>
+        </div>
+      </div>
 
-<%= render 'form' %>
-
-<%= link_to 'Voltar', tasks_path, class: 'btn btn-secondary mt-2' %>
+      <div class="text-end mt-3">
+        <%= link_to 'Voltar', tasks_path, class: 'btn btn-secondary' %>
+      </div>
+    </div>
+  </div>
+</div>
