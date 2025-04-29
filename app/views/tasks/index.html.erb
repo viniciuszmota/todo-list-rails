@@ -14,10 +14,21 @@
       <% else %>
         <div class="list-group shadow-sm">
           <% @tasks.each do |task| %>
-            <div class="list-group-item d-flex justify-content-between align-items-center">
-              <%= link_to task.title, task_path(task), class: "text-decoration-none text-dark" %>
+            <div class="list-group-item p-0">
+              <div class="d-flex justify-content-between align-items-center">
+                <%= link_to task_path(task), class: "flex-grow-1 text-decoration-none text-dark p-3" do %>
+                  <strong><%= task.title %></strong>
+                <% end %>
 
-              <%= button_to "Deletar", task, method: :delete, class: "btn btn-sm btn-danger", data: { bs_toggle: "modal", bs_target: "#confirmDeleteModal", task_url: task_path(task) } %>
+                <div class="pe-3">
+                  <button class="btn btn-sm btn-danger"
+                          data-bs-toggle="modal"
+                          data-bs-target="#confirmDeleteModal"
+                          data-task-url="<%= task_path(task) %>">
+                    Deletar
+                  </button>
+                </div>
+              </div>
             </div>
           <% end %>
         </div>
@@ -53,17 +64,14 @@
 <!-- Script para manipular modal -->
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    const deleteButtons = document.querySelectorAll("form.button_to button[data-bs-toggle='modal']");
-    const deleteForm = document.getElementById("deleteTaskForm");
+  const deleteButtons = document.querySelectorAll("button[data-task-url]");
+  const deleteForm = document.getElementById("deleteTaskForm");
 
-    deleteButtons.forEach((btn) => {
-      btn.addEventListener("click", function (event) {
-        event.preventDefault();
-        const taskUrl = btn.dataset.taskUrl;
-        deleteForm.setAttribute("action", taskUrl);
-        const modal = new bootstrap.Modal(document.getElementById("confirmDeleteModal"));
-        modal.show();
-      });
+  deleteButtons.forEach((btn) => {
+    btn.addEventListener("click", function () {
+      const taskUrl = btn.dataset.taskUrl;
+      deleteForm.setAttribute("action", taskUrl);
     });
   });
+});
 </script>
