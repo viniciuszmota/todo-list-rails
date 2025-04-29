@@ -2,7 +2,11 @@ class TasksController < ApplicationController
   before_action :authenticate_user!
   before_action :set_task, only: [ :show, :edit, :update, :destroy ]
   def index
-    @tasks = current_user.tasks.order(created_at: :desc) # mostra da mais recente para mais antiga
+    if params[:status].present?
+      @tasks = current_user.tasks.where(status: params[:status])
+    else
+      @tasks = current_user.tasks.order(created_at: :desc) # mostra da mais recente para mais antiga
+    end
   end
 
   def new

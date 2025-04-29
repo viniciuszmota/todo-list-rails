@@ -1,7 +1,23 @@
 <div class="container mt-5">
-  <div class="row justify-content-center">
-    <div class="col-md-10">
+  <div class="row">
 
+    <!-- Sidebar de Filtros -->
+    <div class="col-md-3 mb-4">
+      <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+          <h6 class="mb-0">Filtrar por Status</h6>
+        </div>
+        <div class="list-group list-group-flush">
+          <%= link_to "Todas", tasks_path, class: "list-group-item list-group-item-action #{'active' if params[:status].blank?}" %>
+          <% Task.statuses.keys.each do |status| %>
+            <%= link_to status.humanize, tasks_path(status: status), class: "list-group-item list-group-item-action #{'active' if params[:status] == status}" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <!-- Conteúdo principal: Lista de tarefas -->
+    <div class="col-md-9">
       <div class="d-flex justify-content-between align-items-center mb-4">
         <h4 class="mb-0">Minhas Tarefas</h4>
         <%= link_to 'Cadastrar Nova Tarefa', new_task_path, class: 'btn btn-primary' %>
@@ -17,7 +33,7 @@
             <div class="list-group-item p-0">
               <div class="d-flex justify-content-between align-items-center">
                 <%= link_to task_path(task), class: "flex-grow-1 text-decoration-none text-dark p-3" do %>
-                  <strong><%= task.title %></strong>
+                  <strong><%= task.title %></strong> - 
                 <% end %>
 
                 <div class="pe-3">
@@ -33,10 +49,10 @@
           <% end %>
         </div>
       <% end %>
-
     </div>
   </div>
 </div>
+
 
 <!-- Modal de confirmação -->
 <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">

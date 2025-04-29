@@ -5,7 +5,14 @@
     </div>
 
     <div class="card-body">
-      <p><strong>Status:</strong> <span class="badge bg-<%= @task.status == "concluída" ? "success" : "secondary" %>"><%= @task.status.capitalize %></span></p>
+      <p><strong>Status:</strong>
+        <% if @task.status.present? %>
+        <span class="badge bg-<%= @task.status == "concluida" ? "success" : "secondary" %>">
+          <%= @task.status.capitalize.tr('_', ' ') %>
+        </span>
+        <% else %>
+          <span class="text-muted">Não definido</span>
+        <% end %>
 
       <p><strong>Descrição:</strong></p>
       <p><%= @task.description.presence || "Sem descrição." %></p>

@@ -3,4 +3,10 @@ class Task < ApplicationRecord
 
   validates :title, presence: true
   validates :status, presence: true
+
+  enum status: {
+    pendente: "pendente",
+    em_andamento: "em_andamento",
+    concluida: "concluida"
+  }
 end
