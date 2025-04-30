@@ -1,7 +1,6 @@
 <div class="container mt-5">
   <div class="row">
 
-    <!-- Sidebar de Filtros -->
     <div class="col-md-3 mb-4">
       <div class="card shadow-sm">
         <div class="card-header bg-primary text-white">
@@ -9,14 +8,20 @@
         </div>
         <div class="list-group list-group-flush">
           <%= link_to "Todas", tasks_path, class: "list-group-item list-group-item-action #{'active' if params[:status].blank?}" %>
+          <% status_labels = {
+            "pendente" => "Pendente",
+            "em_andamento" => "Em Andamento",
+            "concluida" => "Concluída"
+        } %>
+
           <% Task.statuses.keys.each do |status| %>
-            <%= link_to status.humanize, tasks_path(status: status), class: "list-group-item list-group-item-action #{'active' if params[:status] == status}" %>
+            <%= link_to status_labels[status], tasks_path(status: status), class: "list-group-item list-group-item-action #{'active' if params[:status] == status}" %>
           <% end %>
+
         </div>
       </div>
     </div>
 
-    <!-- Conteúdo principal: Lista de tarefas -->
     <div class="col-md-9">
       <div class="d-flex justify-content-between align-items-center mb-4">
         <h4 class="mb-0">Minhas Tarefas</h4>
@@ -33,7 +38,7 @@
             <div class="list-group-item p-0">
               <div class="d-flex justify-content-between align-items-center">
                 <%= link_to task_path(task), class: "flex-grow-1 text-decoration-none text-dark p-3" do %>
-                  <strong><%= task.title %></strong> - 
+                  <strong><%= task.title %></strong> - <%= task.status == "concluida" ? "Concluída" : task.status.humanize.tr('_', ' ').capitalize %>
                 <% end %>
 
                 <div class="pe-3">
@@ -77,7 +82,7 @@
   </div>
 </div>
 
-<!-- Script para manipular modal -->
+<!-- Script para manipular modal colocado diretamente aqui, não foi no stimulus -->
 <script>
   document.addEventListener("DOMContentLoaded", function () {
   const deleteButtons = document.querySelectorAll("button[data-task-url]");
