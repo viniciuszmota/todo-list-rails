@@ -8,6 +8,7 @@
         </div>
         <div class="list-group list-group-flush">
           <%= link_to "Todas", tasks_path, class: "list-group-item list-group-item-action #{'active' if params[:status].blank?}" %>
+
           <% status_labels = {
             "pendente" => "Pendente",
             "em_andamento" => "Em Andamento",
